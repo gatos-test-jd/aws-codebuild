@@ -1,0 +1,22 @@
+version: '3.5'
+
+services:
+  compile:
+    image: compile
+    build:
+      context: ../
+      dockerfile: docker/compile.docker
+    container_name: compile
+    networks:
+      - compile_network
+    env_file:
+      - ${SERVICE_ENVIRONMENT}.env
+    volumes:
+      - "./artifacts:/test/artifacts"
+
+networks:
+  compile_network:
+    name: compile_network
+    driver: bridge
+    attachable: true
+
