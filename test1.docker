@@ -1,0 +1,19 @@
+# Start from a base of Ubuntu 16.04
+FROM openjdk:8-jre-alpine
+MAINTAINER Sander Test <test@example.com>
+
+# Install system-wide dependencies
+RUN apk update
+RUN apk upgrade
+RUN apk add bash
+RUN apk add less
+
+RUN mkdir /test
+RUN addgroup --gid 4321 test
+RUN adduser -h /test -s /bin/false -G test -D -H -u 4321 test
+RUN chown -R test:test /test
+RUN mkdir -p /var/log/local
+RUN chown -R test:test /var/log/local
+
+CMD ["/bin/bash", "-c", "echo 'Test Image Complete'"]
+

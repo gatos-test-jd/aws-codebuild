@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - pwd
+      - ls -alrt
+      - . ./docker/codebuild-extras.sh 2>/dev/null
+      - aws --version
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - printenv
+      - echo "------ ${CODEBUILD_GIT_BRANCH} ------"
+  build:
+    commands:
+      - docker-compose build test1
+  post_build:
+    commands:
+      - AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar echo "ToDo - install to ECS..."
+
+artifacts:
+  files:
+    - README.md
+  name: artifact-${CODEBUILD_GIT_BRANCH}-$(date +%Y-%m-%d_%H-%M-%S).zip
+
