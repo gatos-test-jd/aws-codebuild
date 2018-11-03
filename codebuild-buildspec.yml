@@ -6,7 +6,7 @@ phases:
       - pwd
       - ls -alrt
       - aws sts get-caller-identity --query 'Account' --output text
-      - echo . ./docker/codebuild-extras.sh 2>/dev/null
+      - . ./docker/codebuild-extras.sh
       - aws --version
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
