@@ -14,7 +14,9 @@ phases:
       - mkdir -p docker/artifacts
       - cd docker
       - docker-compose build compile
+      - chmod -R a+w artifacts
       - docker-compose up compile
+      - chmod -R go-w artifacts
   post_build:
     commands:
       - AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar echo "ToDo - install to ECS..."
